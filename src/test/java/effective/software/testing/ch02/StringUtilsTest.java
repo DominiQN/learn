@@ -122,6 +122,8 @@ class StringUtilsTest {
         assertThat(substringsBetween("abc", "a", "c")).containsExactly("b");
         // T15 태그 모두를 여러 번 포함하는 경우
         assertThat(substringsBetween("abcabc", "a", "c")).containsExactly("b", "b");
+        // str에 공백 문자 추가
+        assertThat(substringsBetween("abcax y zc", "a", "c")).containsExactly("b", "x y z");
     }
 
     // T16, T17, T18
@@ -149,6 +151,8 @@ class StringUtilsTest {
         assertThat(substringsBetween("aabcc", "aa", "cc")).containsExactly("b");
         // T20 태그 모두를 여러 번 포함하는 경우
         assertThat(substringsBetween("aabccaabcc", "aa", "cc")).containsExactly("b", "b");
+        // open과 close에 공백 문자 추가
+        assertThat(substringsBetween("a abc ca abc c", "a a", "c c")).containsExactly("b", "b");
     }
 
     // T21
