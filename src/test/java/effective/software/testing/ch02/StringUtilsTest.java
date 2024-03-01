@@ -3,6 +3,7 @@ package effective.software.testing.ch02;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import static effective.software.testing.ch02.StringUtils.substringsBetween;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class StringUtilsTest {
@@ -26,9 +27,24 @@ class StringUtilsTest {
         final String close = "c";
 
         // when
-        final String[] result = StringUtils.substringsBetween(str, open, close);
+        final String[] result = substringsBetween(str, open, close);
 
         // then
         assertThat(result).containsExactly("x", "y", "z");
+    }
+
+    @DisplayName("open과 close에 1개 이상의 길이를 가진 토큰일 때도 동작하는지")
+    @Test
+    void openCloseStringMoreThan1Char() {
+        // given
+        final String str = "abcdeabdefgab123e";
+        final String open = "ab";
+        final String close = "e";
+
+        // when
+        final String[] result = substringsBetween(str, open, close);
+
+        // then
+        assertThat(result).containsExactly("cd", "d", "123");
     }
 }
