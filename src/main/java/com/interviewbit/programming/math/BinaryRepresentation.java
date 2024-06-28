@@ -7,10 +7,10 @@ public class BinaryRepresentation {
         StringBuilder binary = new StringBuilder();
 
         do {
-            binary.insert(0, decimal % 2);
+            binary.append(decimal % 2);
             decimal = decimal / 2;
         } while (decimal != 0);
 
-        return binary.toString();
+        return binary.reverse().toString();
     }
 }
