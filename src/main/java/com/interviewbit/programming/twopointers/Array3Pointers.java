@@ -1,96 +1,69 @@
 package com.interviewbit.programming.twopointers;
 
-import java.util.List;
+import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
+
+// This is not my solution.
 public class Array3Pointers {
     // DO NOT MODIFY THE LIST. IT IS READ ONLY
     public int minimize(final List<Integer> a, final List<Integer> b, final List<Integer> c) {
-        if (a.isEmpty() || b.isEmpty() || c.isEmpty()) {
-            return Integer.MAX_VALUE;
+        List<Node> nodes = new ArrayList<>();
+
+        for (int value : a) {
+            nodes.add(new Node(0, value));
+        }
+        for (int value : b) {
+            nodes.add(new Node(1, value));
+        }
+        for (int value : c) {
+            nodes.add(new Node(2, value));
         }
 
-        int aMax = Math.max(minimize(a, b), minimize(a, c));
-        int bMax = Math.max(minimize(b, a), minimize(b, c));
-        int cMax = Math.max(minimize(c, a), minimize(c, b));
+        Collections.sort(nodes);
 
-        return min(aMax, bMax, cMax);
-    }
-
-    private int minimize(final List<Integer> x, final List<Integer> y) {
         int result = Integer.MAX_VALUE;
+        Map<Integer, Integer> nodeMap = new HashMap<>();
 
-        for (int target : x) {
-            result = Math.min(searchMinimumDistance(target, y), result);
+        for (Node node : nodes) {
+            nodeMap.put(node.index, node.value);
+
+            if (nodeMap.size() == 3) {
+                result = Math.min(result, maxDistance(nodeMap));
+            }
         }
 
         return result;
     }
 
-    private int searchMinimumDistance(final int target, final List<Integer> list) {
-        int left = 0;
-        int right = list.size() - 1;
+    private int maxDistance(Map<Integer, Integer> nodeMap) {
+        int a = nodeMap.get(0);
+        int b = nodeMap.get(1);
+        int c = nodeMap.get(2);
 
-        while (left < right) {
-            int mid = (left + right) / 2;
-            int midVal = list.get(mid);
+        int ab = Math.abs(a - b);
+        int bc = Math.abs(b - c);
+        int ca = Math.abs(c - a);
 
-            if (midVal < target) {
-                left = mid + 1;
-                continue;
-            }
-            if (target < midVal) {
-                right = mid - 1;
-                continue;
-            }
-
-            return 0;
-        }
-
-        int anchor = left;
-        int anchorDistance = Math.abs(target - list.get(anchor));
-
-        int anchorLeftDistance;
-        if (anchor == 0) {
-            anchorLeftDistance = anchorDistance;
-        } else {
-            anchorLeftDistance = Math.abs(target - list.get(anchor - 1));
-        }
-
-        int anchorRightDistance;
-        if (anchor == list.size() - 1) {
-            anchorRightDistance = anchorDistance;
-        } else {
-            anchorRightDistance = Math.abs(target - list.get(anchor + 1));
-        }
-
-        return min(anchorLeftDistance, anchorDistance, anchorRightDistance);
+        return Math.max(ab, Math.max(bc, ca));
     }
 
-    private int min(int... values) {
-        int result = Integer.MAX_VALUE;
+    private static class Node implements Comparable<Node> {
+        private final int index;
+        private final int value;
 
-        for (int value : values) {
-            result = Math.min(result, value);
+        public Node(int index, int value) {
+            this.index = index;
+            this.value = value;
         }
 
-        return result;
+        @Override
+        public int compareTo(@NotNull Node other) {
+            return Integer.compare(this.value, other.value);
+        }
     }
 }
-//
-/// / 1
-//[100, 1000]
-//
-//left = 0, right = 1, mid = 0, midval = 100
-//left = 0, right = 0,
-//
-//// 10000
-//[100, 1000]
-//
-//left= 0, right = 1, mid = 0, midval = 100
-//left = 1, right = 1,
-//
-//// 500
-//[100, 1000]
-//
-//left = 0, right = 1, mid = 0, midval = 100
-//left = 1, right = 1
