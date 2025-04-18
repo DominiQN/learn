@@ -3,19 +3,27 @@ package com.interviewbit.programming.bitmanipulation;
 import java.util.ArrayList;
 
 public class DifferentBitsSumPairwise {
-    public int cntBits(ArrayList<Integer> list) {
-        int result = 0;
-        for (int i = 0; i < list.size(); i++) {
-            for (int j = i + 1; j < list.size(); j++) {
-                int diff = sumDiff(list.get(i), list.get(j));
-                result += diff;
-            }
-        }
-        return result * 2 % (1_000_000_000 + 7);
-    }
+    private static final int MODULO = 1_000_000_000 + 7;
 
-    private int sumDiff(int a, int b) {
-        int xor = a ^ b;
-        return Integer.bitCount(xor);
+    public int cntBits(ArrayList<Integer> list) {
+        long result = 0;
+
+        for (int i = 0; i < Integer.SIZE; i++) {
+            int flag = 1 << i;
+
+            int count1s = 0;
+            for (int value : list) {
+
+                if ((value & flag) == flag) {
+                    count1s++;
+                }
+            }
+
+            int count0s = list.size() - count1s;
+
+            result = (result + (long) count0s * count1s * 2) % MODULO;
+        }
+
+        return (int) result;
     }
 }
