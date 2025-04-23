@@ -13,8 +13,15 @@ class HotelServiceTest {
     @Test
     void ex1() {
         ArrayList<Integer> result = hotelService.nearestHotel(
-                listOf(listOf(0, 0), listOf(1, 0)),
-                listOf(listOf(1, 1), listOf(2, 1), listOf(1, 2))
+                listOf(
+                        listOf(0, 0),
+                        listOf(1, 0)
+                ),
+                listOf(
+                        listOf(1, 1),
+                        listOf(2, 1),
+                        listOf(1, 2)
+                )
         );
 
         assertThat(result).containsExactly(1, 0, 2);
