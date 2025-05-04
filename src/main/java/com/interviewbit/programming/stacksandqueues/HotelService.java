@@ -22,21 +22,10 @@ public class HotelService {
         final int rowLength = map.size();
         final int colLength = map.get(0).size();
 
-        if (origin.x > 0) {
-            queue.add(Coordinate.of(origin.x - 1, origin.y));
-        }
-
-        if (origin.x < rowLength - 1) {
-            queue.add(Coordinate.of(origin.x + 1, origin.y));
-        }
-
-        if (origin.y > 0) {
-            queue.add(Coordinate.of(origin.x, origin.y - 1));
-        }
-
-        if (origin.y < colLength - 1) {
-            queue.add(Coordinate.of(origin.x, origin.y + 1));
-        }
+        addUp(queue, origin);
+        addDown(queue, origin, rowLength);
+        addLeft(queue, origin);
+        addRight(queue, origin, colLength);
 
         while (!queue.isEmpty()) {
             Coordinate coordinate = queue.poll();
@@ -45,17 +34,36 @@ public class HotelService {
                 return coordinate.distanceFrom(origin);
             }
 
-            // x 처리
-            //// 위,아래 벽에 닿지 않았다면
-            if (coordinate.x > 0 && coordinate.x < rowLength - 1) {
-                // 노가다
+            if (coordinate.x < origin.x && coordinate.y < origin.y) {
+                // a
+                addUp(queue, coordinate);
+            } else if (coordinate.x < origin.x && coordinate.y == origin.y) {
+                // b
+                addUp(queue, coordinate);
+                addRight(queue, coordinate, colLength);
+            } else if (coordinate.x < origin.x && coordinate.y > origin.y) {
+                // c
+                addRight(queue, coordinate, colLength);
+            } else if (coordinate.x == origin.x && coordinate.y > origin.y) {
+                // d
+                addRight(queue, coordinate, colLength);
+                addDown(queue, coordinate, rowLength);
+            } else if (coordinate.x > origin.x && coordinate.y > origin.y) {
+                // e
+                addDown(queue, coordinate, rowLength);
+            } else if (coordinate.x > origin.x && coordinate.y == origin.y) {
+                // f
+                addDown(queue, coordinate, rowLength);
+                addLeft(queue, coordinate);
+            } else if (coordinate.x > origin.x && coordinate.y < origin.y) {
+                // g
+                addLeft(queue, coordinate);
+            } else if (coordinate.x == origin.x && coordinate.y < origin.y) {
+                // h
+                addLeft(queue, coordinate);
+                addUp(queue, coordinate);
             }
 
-            // y 처리
-            //// 왼, 오른 벽에 닿지 않았다면
-            if (coordinate.y > 0 && coordinate.y < colLength - 1) {
-                // 노가다
-            }
         }
 
         throw new RuntimeException("Bug exists");
@@ -63,39 +71,37 @@ public class HotelService {
     /*
      아이디어
 
-     기준점 기준 십자가는 회전 + 십자가로 움직이기 (b, e, g, d)
-     십자가 제외 좌표는 시계방향 회전으로만 움직이기 (a, c, h, f)
+     기준점 기준 십자가는 회전 + 십자가로 움직이기 (b, d, f, h)
+     십자가 제외 좌표는 시계방향 회전으로만 움직이기 (a, c, e, g)
 
      a(1,1) b(1,2) c(1,3)
-     d(2,1) 0(2,2) e(2,3)
-     f(3,1) g(3,2) h(3,3)
-
-     ax < 0x 위쪽
-     ay < 0y -
-
-     bx < 0x 위쪽
-     by = 0y 오른쪽
-
-     cx < 0x -
-     cy > 0y 오른
-
-     dx = 0x 위쪽
-     dy < 0y 왼쪽
-
-
-     ex = 0x 아래
-     ey > 0y 오른
-
-     fx > 0x -
-     fy < 0y 왼쪽
-
-     gx > 0x 아래
-     gy = 0y 왼쪽
-
-     hx > 0x 아래
-     hy > 0y -
+     h(2,1) 0(2,2) d(2,3)
+     g(3,1) f(3,2) e(3,3)
      */
 
+    private void addUp(Queue<Coordinate> queue, Coordinate from) {
+        if (from.x > 0) {
+            queue.add(Coordinate.of(from.x - 1, from.y));
+        }
+    }
+
+    private void addDown(Queue<Coordinate> queue, Coordinate from, int rowLength) {
+        if (from.x < rowLength - 1) {
+            queue.add(Coordinate.of(from.x + 1, from.y));
+        }
+    }
+
+    private void addLeft(Queue<Coordinate> queue, Coordinate from) {
+        if (from.y > 0) {
+            queue.add(Coordinate.of(from.x, from.y - 1));
+        }
+    }
+
+    private void addRight(Queue<Coordinate> queue, Coordinate from, int colLength) {
+        if (from.y < colLength - 1) {
+            queue.add(Coordinate.of(from.x, from.y + 1));
+        }
+    }
 
     static class Coordinate {
         int x;
@@ -112,6 +118,13 @@ public class HotelService {
 
         public int distanceFrom(Coordinate other) {
             return Math.abs(this.x - other.x) + Math.abs(this.y - other.y);
+        }
+
+        @Override
+        public String toString() {
+            return "(" + x +
+                "," + y +
+                ')';
         }
     }
 }
