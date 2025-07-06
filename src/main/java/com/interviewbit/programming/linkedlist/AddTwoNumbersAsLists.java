@@ -1,5 +1,7 @@
 package com.interviewbit.programming.linkedlist;
 
+import com.interviewbit.programming.utils.ListNode;
+
 public class AddTwoNumbersAsLists {
 //    // memory efficient
 //    public ListNode addTwoNumbers(ListNode a, ListNode b) {

@@ -1,5 +1,7 @@
 package com.interviewbit.programming.linkedlist;
 
+import com.interviewbit.programming.utils.ListNode;
+
 /**
  * Definition for singly-linked list.
  * class ListNode {

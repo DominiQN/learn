@@ -1,5 +1,7 @@
 package com.interviewbit.programming.linkedlist;
 
+import com.interviewbit.programming.utils.ListNode;
+
 public class ReverseLinkedListII {
     public ListNode reverseBetween(ListNode node, int from, int to) {
         ListNode head = new ListNode(0);

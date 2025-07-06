@@ -1,5 +1,7 @@
 package com.interviewbit.programming.linkedlist;
 
+import com.interviewbit.programming.utils.ListNode;
+
 public class MergeTwoSortedLists {
     public ListNode mergeTwoLists(ListNode a, ListNode b) {
         ListNode head = new ListNode(0);

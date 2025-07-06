@@ -1,5 +1,7 @@
 package com.interviewbit.programming.linkedlist;
 
+import com.interviewbit.programming.utils.ListNode;
+
 public class InsertionSortList {
 
 // 제출은 이거

@@ -1,11 +1,12 @@
 package com.interviewbit.programming.linkedlist;
 
+import com.interviewbit.programming.utils.ListNode;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 
-import static com.interviewbit.programming.linkedlist.ListNodeUtils.node;
+import static com.interviewbit.programming.utils.ListNodeUtils.node;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class ListNodeTest {

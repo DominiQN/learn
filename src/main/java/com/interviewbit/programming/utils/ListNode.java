@@ -1,10 +1,10 @@
-package com.interviewbit.programming.linkedlist;
+package com.interviewbit.programming.utils;
 
 public class ListNode {
     public int val;
     public ListNode next;
 
-    ListNode(int x) {
+    public ListNode(int x) {
         val = x;
         next = null;
     }

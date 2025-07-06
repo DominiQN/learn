@@ -1,4 +1,4 @@
-package com.interviewbit.programming.linkedlist;
+package com.interviewbit.programming.utils;
 
 import java.util.ArrayList;
 

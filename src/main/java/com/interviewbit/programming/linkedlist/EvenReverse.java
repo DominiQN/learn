@@ -1,5 +1,7 @@
 package com.interviewbit.programming.linkedlist;
 
+import com.interviewbit.programming.utils.ListNode;
+
 public class EvenReverse {
     public ListNode solve(ListNode node) {
         ListNode oddHead = new ListNode(0);
