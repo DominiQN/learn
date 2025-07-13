@@ -13,7 +13,8 @@ class MaximalStringTest {
             "254, 1, 524",
             "254, 2, 542",
             "451299, 2, 991254",
-            "541299, 2, 991254"
+            "541299, 2, 991254",
+            "129814999, 4, 999984211"
     })
     void test(String value, int chance, String expected) {
         String actual = maximalString.solve(value, chance);

@@ -8,27 +8,29 @@ public class MaximalString {
      * 1 <= value.length() <= 9
      * 1 <= chance <= 5
      */
-    public String solve(String value, int maxChance) {
+    public String solve(String value, int chance) {
         char[] chars = value.toCharArray();
         maxChars = value.toCharArray();
 
-        for (int chance = 1; chance <= maxChance; chance++) {
-            findMaxChars(chars, 0, chance);
-        }
+        findMaxChars(chars, 0, chance);
 
         return String.valueOf(maxChars);
     }
 
-    private void findMaxChars(char[] chars, int current, int chance) {
-        if (current == chance && isGreaterThanMax(chars)) {
-            copyToMaxChars(chars);
+    private void findMaxChars(char[] chars, int depth, int maxDepth) {
+        if (depth == maxDepth) {
+            if (isGreaterThanMax(chars)) {
+                copyToMaxChars(chars);
+            }
             return;
         }
 
-        for (int i = current + 1; i < chars.length; i++) {
-            swap(chars, current, i);
-            findMaxChars(chars, current + 1, chance);
-            swap(chars, current, i);
+        for (int i = 0; i < chars.length; i++) {
+            for (int j = 0; j < chars.length; j++) {
+                swap(chars, i, j);
+                findMaxChars(chars, depth + 1, maxDepth);
+                swap(chars, j, i);
+            }
         }
     }
 
